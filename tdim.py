@@ -17,7 +17,7 @@ print(
 ░░░██║░░░██║░░██║██║██║╚██╔╝██║
 ░░░██║░░░██████╔╝██║██║░╚═╝░██║
 ░░░╚═╝░░░╚═════╝░╚═╝╚═╝░░░░░╚═╝
-версия 0.2.1\n
+версия 0.2.2\n
 ''')
 
 try:
@@ -48,12 +48,16 @@ cnt_of_messages = 0
 cnt_of_words = 0
 cnt_of_stickers = 0
 cnt_of_letters = 0
+cnt_of_select = 0
 
 for i in baza['chats']['list'][select]['messages']:
     try:
         cnt_of_stickers += i['media_type'] == 'sticker'
-    except KeyError:
-        pass
+    except KeyError: pass
+    
+    try:
+        cnt_of_select += i['from'] == baza['chats']['list'][select]['name']
+    except KeyError: pass
     
     cnt_of_words += i['text'].count(' ')
     if i['text'] != '':
@@ -66,5 +70,8 @@ print('Количество сообщений:', cnt_of_messages)
 print('Количество символов:', cnt_of_letters)
 print('Количество слов:', cnt_of_words)
 print('Количество стикеров:', cnt_of_stickers)
+print("Сообщений от", baza['chats']['list'][select]['name'] + ':', cnt_of_select)
+print("Сообщений от Вас:", cnt_of_messages - cnt_of_select)
 print('!!!!!!!!!!!!!!')
 input('Нажми Enter для выхода')
+
